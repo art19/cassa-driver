@@ -17,7 +17,6 @@
 #++
 
 require 'spec_helper'
-require 'byebug'
 
 module Cassandra
   class Cluster
@@ -32,12 +31,7 @@ module Cassandra
         ].each do |(version, klass, parser_class)|
 
           describe(klass) do
-            let(:data) do 
-              f = File.read(File.dirname(__FILE__) + '/fetchers/' + version + '-data.json')
-              puts f.class
-              byebug
-              JSON.load(f.to_s) 
-            end
+            let(:data) { JSON.load(File.read(File.dirname(__FILE__) + '/fetchers/' + version + '-data.json')) }
             let(:connection) { double('cql protocol handler') }
             let(:schema_type_parser) {
               parser_class.new

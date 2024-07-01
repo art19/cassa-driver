@@ -25,6 +25,7 @@ group :test do
   gem 'rspec-collection_matchers'
   gem 'rspec-wait'
   gem 'simplecov'
+  gem 'byebug'
 end
 
 group :docs do

@@ -8,7 +8,7 @@ on:
   pull_request:
 
 jobs:
-  ruby_rails_test_matrix:
+  test:
     runs-on: ubuntu-latest
 
     strategy:

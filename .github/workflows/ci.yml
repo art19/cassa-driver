@@ -16,6 +16,7 @@ jobs:
     - uses: ruby/setup-ruby@v1
       with:
         ruby-version: ${{ matrix.ruby }}
+        rubygems: 3.3.22
         bundler-cache: true
 
     - name: Runs code QA and tests

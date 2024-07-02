@@ -33,6 +33,6 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'ione', '~> 1.2'
   s.add_runtime_dependency 'sorted_set', '~> 1.0'
 
-  s.add_development_dependency 'bundler', '~> 2.4'
+  s.add_development_dependency 'bundler'
   s.add_development_dependency 'rake', '~> 13.0'
 end

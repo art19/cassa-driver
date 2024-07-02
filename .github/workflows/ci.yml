@@ -22,8 +22,9 @@ jobs:
     - name: Runs code QA and tests
       env:
         RAILS_VERSION: ~> ${{ matrix.rails }}
+        COVERAGE: no
       run: |
         sudo apt-get update
         sudo apt-get install openjdk-8-jdk
         bundle
-        bundle exec rake test
+        bundle exec rake rspec

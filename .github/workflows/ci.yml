@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        ruby: ['2.7', '3.0', '3.1']
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ matrix.ruby }}
+        bundler-cache: true
+
+    - name: Runs code QA and tests
+      env:
+        COVERAGE: no
+      run: |
+        sudo apt-get update
+        sudo apt-get install openjdk-8-jdk
+        bundle
+        bundle exec rake rspec

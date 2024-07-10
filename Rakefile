@@ -59,3 +59,13 @@ Rake::TestTask.new(stress: :compile) do |t|
   t.test_files = FileList['integration/stress_tests/*_test.rb']
   t.verbose = true
 end
+
+desc 'Build the package and publish it to rubygems.pkg.github.com'
+task publish: :build do
+  # Requires local setup of personal access token, see:
+  # 1. https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-rubygems-registry#authenticating-with-a-personal-access-token
+  system("gem push --key github --host https://rubygems.pkg.github.com/art19 " \
+         "pkg/cassandra-driver-#{Cassandra::VERSION}.gem")
+end
+
+

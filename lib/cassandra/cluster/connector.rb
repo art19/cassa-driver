@@ -126,9 +126,7 @@ module Cassandra
                                       @connection_options.nodelay? ? 1 : 0)
 
           Protocol::CqlProtocolHandler.new(connection,
-                                           host,
                                            @reactor,
-                                           @logger,
                                            @connection_options.protocol_version,
                                            @connection_options.compressor,
                                            @connection_options.heartbeat_interval,

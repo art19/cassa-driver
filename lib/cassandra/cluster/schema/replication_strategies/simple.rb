@@ -29,10 +29,10 @@ module Cassandra
             factor = size if size < factor
             replication_map = ::Hash.new
 
-            hosts_ring = token_ring.map { |t| token_hosts[t] }
             token_ring.each_with_index do |token, i|
-              candidates = hosts_ring.cycle(2 * size).drop(i).take(size).uniq
-              replication_map[token] = candidates.take(factor).freeze
+              replication_map[token] = factor.times.map do |j|
+                token_hosts[token_ring[(i + j) % size]]
+              end.freeze
             end
 
             replication_map

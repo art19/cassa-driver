@@ -22,14 +22,8 @@ require 'spec_helper'
 module Cassandra
   module Protocol
     describe CqlProtocolHandler do
-      let :host do
-        'example.com'
-      end
-      let :logger do
-        Cassandra::NullLogger.new
-      end
       let :protocol_handler do
-        described_class.new(connection, host, scheduler, logger, 1, nil, 30, 60, 36)
+        described_class.new(connection, scheduler, 1, nil, 30, 60, 36)
       end
 
       let :connection do
@@ -58,8 +52,6 @@ module Cassandra
         connection.stub(:on_connected) do |&h|
           connection.stub(:connected_listener).and_return(h)
         end
-        connection.stub(:host).and_return(host)
-
         protocol_handler
       end
 
@@ -95,6 +87,7 @@ module Cassandra
 
       describe '#host' do
         it 'delegates to the connection' do
+          connection.stub(:host).and_return('example.com')
           protocol_handler.host.should == 'example.com'
         end
       end
@@ -182,7 +175,7 @@ module Cassandra
 
         context 'when a compressor is specified' do
           let :protocol_handler do
-            described_class.new(connection, host, scheduler, logger, 1, compressor)
+            described_class.new(connection, scheduler, 1, compressor)
           end
 
           let :compressor do
@@ -222,7 +215,7 @@ module Cassandra
 
         context 'when a protocol version is specified' do
           let :protocol_handler do
-            described_class.new(connection, host, scheduler, logger, 7)
+            described_class.new(connection, scheduler, 7)
           end
 
           it 'sets the protocol version in the header' do

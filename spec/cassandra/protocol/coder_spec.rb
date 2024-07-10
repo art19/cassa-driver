@@ -37,20 +37,11 @@ module Cassandra
       end
 
       describe('RUBY-128') do
-        let(:permitted_classes) { [Cassandra::Protocol::CqlByteBuffer, Cassandra::Types::Map, Cassandra::Types::Simple, Symbol] }
-
         it 'reads very large short strings and string' do
-          if Psych::VERSION.to_i >= 4
-            column_specs = ::YAML::load(::File.open(::File.dirname(__FILE__) + "/cols.yml"), aliases: true, permitted_classes: permitted_classes)
-            buffer       = ::YAML::load(::File.open(::File.dirname(__FILE__) + "/buffer.yml"), permitted_classes: permitted_classes)
+          column_specs = ::YAML::load(::File.open(::File.dirname(__FILE__) + "/cols.yml"))
+          buffer       = ::YAML::load(::File.open(::File.dirname(__FILE__) + "/buffer.yml"))
 
-            Coder.read_values_v1(buffer, column_specs)
-          else
-            column_specs = ::YAML::load(::File.open(::File.dirname(__FILE__) + "/cols.yml"))
-            buffer       = ::YAML::load(::File.open(::File.dirname(__FILE__) + "/buffer.yml"))
-
-            Coder.read_values_v1(buffer, column_specs)
-          end
+          Coder.read_values_v1(buffer, column_specs)
         end
       end
     end
